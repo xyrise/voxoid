@@ -12,6 +12,7 @@ set (CMAKE_C_STANDARD_REQUIRED 11)
 
 add_executable (${PROJECT_NAME} "")
 
+include (CTest)
 include (cmake/CompileOptions.cmake)
 include (cmake/Libraries.cmake)
 
@@ -23,6 +24,7 @@ target_include_directories (${PROJECT_NAME}
 target_link_libraries (${PROJECT_NAME} raylib)
 
 add_subdirectory ("./src")
+add_subdirectory ("./test")
 
 install (
   TARGETS

@@ -19,3 +19,4 @@
 
 # Blacklist (overrides Whitelist)
 build/*
+out/*

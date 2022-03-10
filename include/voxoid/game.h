@@ -1,5 +1,6 @@
 #pragma once
 
+#include "tilecube.h"
 #include "raylib.h"
 
 typedef struct Game {

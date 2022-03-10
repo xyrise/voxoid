@@ -6,7 +6,7 @@
 
 void update(Game* game, float delta)
 {
-    delta = delta; // Avoid unused parameter error
+    if (!delta) return;
 
     UpdateCamera(&game->camera);
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {

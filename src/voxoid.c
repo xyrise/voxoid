@@ -25,13 +25,10 @@ int main(void) {
         "raylib [core] example - 3d picking"
     );
 
-    Game game = {
-        .camera = initializeCamera(),
-        .ray = { 0 },
-        .cube_pos = { 0.0f, 1.0f, 0.0f },
-        .cube_size = { 2.0f, 2.0f, 2.0f },
-        .collision = { 0 },
-    };
+    Game game = { 0 };
+    game.camera = initializeCamera();
+    game.cube_pos = (Vector3){ 0.0f, 1.0f, 0.0f };
+    game.cube_size = (Vector3){ 2.0f, 2.0f, 2.0f };
 
     SetCameraMode(game.camera, CAMERA_FREE);
 

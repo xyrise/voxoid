@@ -1,8 +1,18 @@
 /* voxoid.c */
-#include "game.h"
 
 /* Libraries */
 #include "raylib.h"
+
+/* Local States */
+#include "state/controlstate.h"
+#include "state/gamestate.h"
+#include "state/renderstate.h"
+
+/* Local Systems */
+#include "system/controlupdate.h"
+#include "system/render.h"
+#include "system/selection.h"
+
 
 Camera initializeCamera()
 {
@@ -25,21 +35,35 @@ int main(void) {
         "raylib [core] example - 3d picking"
     );
 
-    Game game = { 0 };
-    game.camera = initializeCamera();
-    game.cube_pos = (Vector3){ 0.0f, 1.0f, 0.0f };
-    game.cube_size = (Vector3){ 2.0f, 2.0f, 2.0f };
+    // State initializations
+    ControlState control_state = { 0 };
+    GameState game_state = {
+        .cube_pos = (Vector3){ 0.0f, 1.0f, 0.0f },
+        .cube_size = (Vector3){ 2.0f, 2.0f, 2.0f }
+    };
+    RenderState render_state = { 0 };
+    render_state.camera = initializeCamera();
+    SetCameraMode(render_state.camera, CAMERA_FREE);
 
-    SetCameraMode(game.camera, CAMERA_FREE);
-
+    // Game Loop
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
-        update(&game, GetFrameTime());
+        // Pre-update
+        // float delta = GetFrameTime();
+        ControlState current_control_state = { 0 };
+        updateControlState(&current_control_state);
+        UpdateCamera(&render_state.camera);
 
-        draw(&game);
+        // Update systems
+        updateSelection(&render_state, &game_state, &control_state);
+
+        // Render systems
+        renderGame(&render_state, &game_state);
+
+        // Post-render
+        control_state = current_control_state;
     }
 
     CloseWindow();
-
     return 0;
 }
